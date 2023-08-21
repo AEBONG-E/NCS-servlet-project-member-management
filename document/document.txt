@@ -1,0 +1,1 @@
+document 디렉토리 생성 위한 txt 파일
