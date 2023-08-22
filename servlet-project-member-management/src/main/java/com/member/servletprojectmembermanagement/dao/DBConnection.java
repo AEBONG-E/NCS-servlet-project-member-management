@@ -45,18 +45,7 @@ public class DBConnection {
             log.debug("USER : " + USER);
             log.debug("PASSWORD : " + PASSWORD);
         }
-
         return conn;
-    }
-
-    // PreparedStatement 가져오기
-    public PreparedStatement getPreparedStatement(Connection conn, String sql) throws SQLException {
-        return conn.prepareStatement(sql);
-    }
-
-    // ResultSet 가져오기
-    public ResultSet getResultSet(PreparedStatement pstmt) throws SQLException {
-        return pstmt.executeQuery();
     }
 }
 
