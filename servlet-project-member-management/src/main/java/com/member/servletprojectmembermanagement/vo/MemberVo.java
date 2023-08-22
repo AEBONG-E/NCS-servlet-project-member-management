@@ -5,9 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * 회원 관련 정보를 가지는 도메인 클래스
+ */
 @Getter
 @ToString
 @NoArgsConstructor

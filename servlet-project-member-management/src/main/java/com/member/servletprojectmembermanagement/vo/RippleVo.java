@@ -8,6 +8,9 @@ import lombok.ToString;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * 댓글 관련 정보를 가지는 도메인 클래스
+ */
 @Getter
 @ToString
 @NoArgsConstructor
