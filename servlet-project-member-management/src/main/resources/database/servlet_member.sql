@@ -17,6 +17,9 @@ CREATE TABLE servlet_member.`member`
     PRIMARY KEY (`id`) USING BTREE
 );
 
+insert into servlet_member.member (id, password, name, gender, birth, email, phone, zipcode, addr1, addr2, created_at, updated_at)
+values ('hooney', 'hooney1108', 'hooney', '남', '19900101', 'hooney@gmail.com', '01012341234', '34005', '대전광역시 유성구 대덕대로1111번길 1-8', '가나타운 1동 1호', now(), null);
+
 CREATE TABLE servlet_member.`board`
 (
     `num`         bigint       NOT NULL AUTO_INCREMENT,
