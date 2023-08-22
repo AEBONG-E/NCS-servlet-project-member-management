@@ -7,6 +7,9 @@ import lombok.ToString;
 
 import java.util.Objects;
 
+/**
+ * 게시판 관련 정보를 가지는 도메인 클래스
+ */
 @Getter
 @ToString
 @NoArgsConstructor
