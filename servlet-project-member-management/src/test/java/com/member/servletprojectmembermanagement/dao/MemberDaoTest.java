@@ -94,6 +94,26 @@ public class MemberDaoTest {
         assertTrue(exists);
     }
 
+    @DisplayName("DAO 테스트 - 회원 조회 테스트. ID 가 같다면 해당 회원 이름을 리턴")
+    @Test
+    void givenMemberId_whenFindingMemberName_thenReturnsMemberName() throws SQLException, ClassNotFoundException {
+        //given
+        String memberId = "hooney";
+        String memberName = "hooney";
+        MemberVo member = null;
+        
+        //when
+        String findedMemberName = memberDao.findMemberNameById(memberId);
+        member = memberDao.findMemberById(memberId);
+
+        //then
+        assertNotNull(member);
+        assertNotNull(findedMemberName);
+        assertEquals(memberId, member.getId());
+        assertEquals(memberName, findedMemberName);
+
+    }
+
     @DisplayName("DAO 테스트 - 회원 조회 테스트. ID 가 같다면 해당 회원 정보를 리턴")
     @Test
     void givenMemberId_whenFindingMember_thenReturnsMember() throws SQLException, ClassNotFoundException {

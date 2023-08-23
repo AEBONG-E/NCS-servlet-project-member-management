@@ -49,7 +49,7 @@ public class MemberDao {
      * 존재하지 않는 경우 false.
      */
     public boolean isExistId(String memberId) throws SQLException, ClassNotFoundException {
-        log.debug("MemberDao: isExistId()");
+        log.info("MemberDao: isExistId()");
 
         String sql = "select count(*) as cnt from servlet_member.member where id = ?";
         @Cleanup Connection conn = dbConnection.getConnection();
@@ -72,7 +72,7 @@ public class MemberDao {
      * 회원 생성
      */
     public boolean save(MemberVo member) throws SQLException, ClassNotFoundException {
-        log.debug("MemberDao: save()");
+        log.info("MemberDao: save()");
         String sql = "insert into servlet_member.member values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now(), null)";
         @Cleanup Connection conn = dbConnection.getConnection();
         @Cleanup PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -98,7 +98,7 @@ public class MemberDao {
      * 로그인 처리
      */
     public boolean findMemberByIdAndPassword(String memberId, String password) throws SQLException, ClassNotFoundException {
-        log.debug("MemberDao: findMemberByIdAndPassword()");
+        log.info("MemberDao: findMemberByIdAndPassword()");
         String sql = "select * from servlet_member.member where id = ? and password = ?";
         @Cleanup Connection conn = dbConnection.getConnection();
         @Cleanup PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -114,10 +114,32 @@ public class MemberDao {
     }
 
     /*
+     * 회원 이름 조회
+     * 로그인 성공 시 session 에 Id 와 이름을 담기위해 사용
+     */
+    public String findMemberNameById(String memberId) throws SQLException, ClassNotFoundException {
+        log.info("MemberDao: findMemberNameById()");
+        String name = null;
+        String sql = "select * from servlet_member.member where id = ?";
+        @Cleanup Connection conn = dbConnection.getConnection();
+        @Cleanup PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, memberId);
+        @Cleanup ResultSet rs = pstmt.executeQuery();
+
+        //데이터가 있다면 name 의 데이터를 가져와서 반환
+        if (rs.next()) {
+            name = rs.getString("name");
+            log.info(name);
+        }
+        return name;
+    }
+
+
+    /*
      * 회원 정보 조회
      */
     public MemberVo findMemberById(String memberId) throws SQLException, ClassNotFoundException {
-        log.debug("MemberDao: findMemberById()");
+        log.info("MemberDao: findMemberById()");
         log.info("id: {}", memberId);
         MemberVo member = null;
         String sql = "select * from servlet_member.member where id = ?";
@@ -128,7 +150,20 @@ public class MemberDao {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         if (rs.next()) {
-            LocalDateTime createdAt = LocalDateTime.parse(rs.getString("created_at"), formatter);
+            String createdAtStr = rs.getString("created_at");
+            String updatedAtStr = rs.getString("updated_at");
+
+            LocalDateTime createdAt = null;
+            LocalDateTime updatedAt = null;
+
+            if (createdAtStr != null) {
+                createdAt = LocalDateTime.parse(createdAtStr, formatter);
+            }
+
+            if (updatedAtStr != null) {
+                updatedAt = LocalDateTime.parse(updatedAtStr, formatter);
+            }
+
             member = new MemberVo(
                     memberId,
                     rs.getString("password"),
@@ -141,7 +176,7 @@ public class MemberDao {
                     rs.getString("addr1"),
                     rs.getString("addr2"),
                     createdAt,
-                    null
+                    updatedAt
             );
         }
         assert member != null;
@@ -153,9 +188,9 @@ public class MemberDao {
      * 회원 정보 업데이트
      */
     public boolean update(MemberVo member) throws SQLException, ClassNotFoundException {
-        log.debug("MemberDao: update()");
+        log.info("MemberDao: update()");
         String sql = "update servlet_member.member set password = ?, name = ?, gender = ?, birth = ?, email = ?, " +
-                "phone = ?, zipcode = ?, addr1 = ?, addr2 = ?, updated_at = now() where id = ?";
+                "phone = ?, zipcode = ?, addr1 = ?, addr2 = ?, created_at = ?, updated_at = now() where id = ?";
         @Cleanup Connection conn = dbConnection.getConnection();
         @Cleanup PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, member.getPassword());
@@ -167,7 +202,8 @@ public class MemberDao {
         pstmt.setString(7, member.getZipcode());
         pstmt.setString(8, member.getAddr1());
         pstmt.setString(9, member.getAddr2());
-        pstmt.setString(10, member.getId());
+        pstmt.setString(10, String.valueOf(member.getCreatedAt()));
+        pstmt.setString(11, member.getId());
         pstmt.executeUpdate();
 
         if (pstmt != null) {
@@ -177,7 +213,7 @@ public class MemberDao {
     }
 
     public boolean deleteByMemberId(String memberId) throws SQLException, ClassNotFoundException {
-        log.debug("MemberDao: deleteByMemberId()");
+        log.info("MemberDao: deleteByMemberId()");
         String sql = "delete from servlet_member.member where id = ?";
         @Cleanup Connection conn = dbConnection.getConnection();
         @Cleanup PreparedStatement pstmt = conn.prepareStatement(sql);
