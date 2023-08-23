@@ -178,7 +178,7 @@ public class MemberDao {
     public boolean update(MemberVo member) throws SQLException, ClassNotFoundException {
         log.info("MemberDao: update()");
         String sql = "update servlet_member.member set password = ?, name = ?, gender = ?, birth = ?, email = ?, " +
-                "phone = ?, zipcode = ?, addr1 = ?, addr2 = ?, updated_at = now() where id = ?";
+                "phone = ?, zipcode = ?, addr1 = ?, addr2 = ?, created_at = ?, updated_at = now() where id = ?";
         @Cleanup Connection conn = dbConnection.getConnection();
         @Cleanup PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, member.getPassword());
@@ -190,7 +190,8 @@ public class MemberDao {
         pstmt.setString(7, member.getZipcode());
         pstmt.setString(8, member.getAddr1());
         pstmt.setString(9, member.getAddr2());
-        pstmt.setString(10, member.getId());
+        pstmt.setString(10, String.valueOf(member.getCreatedAt()));
+        pstmt.setString(11, member.getId());
         pstmt.executeUpdate();
 
         if (pstmt != null) {
