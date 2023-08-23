@@ -9,7 +9,9 @@ import lombok.extern.log4j.Log4j2;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -17,12 +19,13 @@ import java.time.format.DateTimeFormatter;
 public class MemberServiceImpl implements MemberService {
 
     private static MemberServiceImpl instance;
-    private final MemberDao memberDao;
+    MemberDao memberDao = MemberDao.getInstance();
 
     //날짜 포맷 형식 전역 변수 선언
     DateTimeFormatter simpleFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
+    public MemberServiceImpl() {}
     private MemberServiceImpl(MemberDao dao) {
         this.memberDao = dao;
     }
@@ -75,7 +78,7 @@ public class MemberServiceImpl implements MemberService {
         memberDto.setAddr1(request.getParameter("addr1"));
         memberDto.setAddr2(request.getParameter("addr2"));
 
-        LocalDateTime createdAt = LocalDateTime.parse(request.getParameter("createdAt"), formatter);
+        LocalDateTime createdAt = LocalDateTime.now();
         memberDto.setCreatedAt(createdAt);
 
         if (!memberDao.isExistId(memberDto.getId())) {
@@ -147,8 +150,8 @@ public class MemberServiceImpl implements MemberService {
             dto.setAddr2(request.getParameter("addr2"));
 
             dto.setCreatedAt(LocalDateTime.parse(request.getParameter("createdAt"), simpleFormatter));
-            LocalDateTime updatedAt = LocalDateTime.parse(request.getParameter("updatedAt"), formatter);
-            dto.setUpdatedAt(updatedAt);
+            LocalDateTime updatedAt = LocalDateTime.now();
+            dto.setCreatedAt((updatedAt));
 
             MemberVo vo = MemberDto.toVo(dto);
             return memberDao.update(vo);

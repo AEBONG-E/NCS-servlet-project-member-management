@@ -1,13 +1,16 @@
 package com.member.servletprojectmembermanagement.controller;
+import com.member.servletprojectmembermanagement.dao.MemberDao;
 import com.member.servletprojectmembermanagement.dto.MemberDto;
 import com.member.servletprojectmembermanagement.service.MemberServiceImpl;
 import lombok.extern.log4j.Log4j2;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -21,27 +24,26 @@ import java.sql.SQLException;
 @WebServlet("/member/*")
 public class MemberController extends HttpServlet {
 
-    private static MemberController instance;
-    private final MemberServiceImpl memberService;
+    private MemberServiceImpl memberService;
 
-    private MemberController(MemberServiceImpl memberService) {
-        this.memberService = memberService;
-    }
+    public MemberController() {}
 
-    public static MemberController getInstance(MemberServiceImpl memberService) {
-        if (instance == null) {
-            instance = new MemberController(memberService);
-        }
-        return instance;
+    @Override
+    public void init() throws ServletException {
+        memberService = new MemberServiceImpl();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req, resp);
+        processRequest(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        processRequest(req, resp);
+    }
+
+    protected void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String RequestURI = req.getRequestURI();
         String contextPath = req.getContextPath();
         String command = RequestURI.substring(contextPath.length());
@@ -51,10 +53,6 @@ public class MemberController extends HttpServlet {
         req.setCharacterEncoding("utf-8");
 
         switch (command) {
-            case "/":
-                log.info("MemberController: welcome");
-                req.getRequestDispatcher("/main/welcome.jsp").forward(req, resp);
-                break;
             case "/member/member_register":   //회원 가입 페이지 노출
                 log.info("MemberController: member_register");
                 req.getRequestDispatcher("/WEB-INF/template/member/member_register.jsp").forward(req, resp);
@@ -106,9 +104,9 @@ public class MemberController extends HttpServlet {
             case "/member/member_update":    //회원정보 수정 페이지 노출
                 log.info("MemberController: member_update");
                 try {
-                    MemberDto memberDto = memberService.getMemberById(req);
-                    log.info("MemberController - memberDto {}: ", memberDto);
-                    req.setAttribute("member", memberDto);
+                    MemberDto member = memberService.getMemberById(req);
+                    log.info("MemberController - memberDto {}: ", member);
+                    req.setAttribute("member", member);
                 } catch (SQLException | ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
@@ -128,6 +126,7 @@ public class MemberController extends HttpServlet {
                 log.info("MemberController: process_member_delete...");
                 try {
                     if (memberService.deleteMember(req)) {
+                        req.getSession().invalidate();
                         resp.sendRedirect("/");
                     }
                 } catch (Exception e) {
