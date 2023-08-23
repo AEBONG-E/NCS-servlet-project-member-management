@@ -114,6 +114,28 @@ public class MemberDao {
     }
 
     /*
+     * 회원 이름 조회
+     * 로그인 성공 시 session 에 Id 와 이름을 담기위해 사용
+     */
+    public String findMemberNameById(String memberId) throws SQLException, ClassNotFoundException {
+        log.info("MemberDao: findMemberNameById()");
+        String name = null;
+        String sql = "select * from servlet_member.member where id = ?";
+        @Cleanup Connection conn = dbConnection.getConnection();
+        @Cleanup PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, memberId);
+        @Cleanup ResultSet rs = pstmt.executeQuery();
+
+        //데이터가 있다면 name 의 데이터를 가져와서 반환
+        if (rs.next()) {
+            name = rs.getString("name");
+            log.info(name);
+        }
+        return name;
+    }
+
+
+    /*
      * 회원 정보 조회
      */
     public MemberVo findMemberById(String memberId) throws SQLException, ClassNotFoundException {
@@ -129,6 +151,7 @@ public class MemberDao {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         if (rs.next()) {
             LocalDateTime createdAt = LocalDateTime.parse(rs.getString("created_at"), formatter);
+            LocalDateTime updatedAt = LocalDateTime.parse(rs.getString("updated_at"), formatter);
             member = new MemberVo(
                     memberId,
                     rs.getString("password"),
@@ -141,7 +164,7 @@ public class MemberDao {
                     rs.getString("addr1"),
                     rs.getString("addr2"),
                     createdAt,
-                    null
+                    updatedAt
             );
         }
         assert member != null;
