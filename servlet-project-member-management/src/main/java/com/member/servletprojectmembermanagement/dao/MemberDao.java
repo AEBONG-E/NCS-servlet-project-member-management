@@ -150,8 +150,20 @@ public class MemberDao {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         if (rs.next()) {
-            LocalDateTime createdAt = LocalDateTime.parse(rs.getString("created_at"), formatter);
-            LocalDateTime updatedAt = LocalDateTime.parse(rs.getString("updated_at"), formatter);
+            String createdAtStr = rs.getString("created_at");
+            String updatedAtStr = rs.getString("updated_at");
+
+            LocalDateTime createdAt = null;
+            LocalDateTime updatedAt = null;
+
+            if (createdAtStr != null) {
+                createdAt = LocalDateTime.parse(createdAtStr, formatter);
+            }
+
+            if (updatedAtStr != null) {
+                updatedAt = LocalDateTime.parse(updatedAtStr, formatter);
+            }
+
             member = new MemberVo(
                     memberId,
                     rs.getString("password"),
