@@ -1,6 +1,7 @@
 package com.member.servletprojectmembermanagement.dto;
 
 import com.member.servletprojectmembermanagement.vo.MemberVo;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -11,6 +12,7 @@ import java.util.Objects;
 @Data
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class MemberDto {
     private String id;
     private String password;
