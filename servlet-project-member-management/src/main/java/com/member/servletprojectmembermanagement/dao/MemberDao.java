@@ -49,7 +49,7 @@ public class MemberDao {
      * 존재하지 않는 경우 false.
      */
     public boolean isExistId(String memberId) throws SQLException, ClassNotFoundException {
-        log.debug("MemberDao: isExistId()");
+        log.info("MemberDao: isExistId()");
 
         String sql = "select count(*) as cnt from servlet_member.member where id = ?";
         @Cleanup Connection conn = dbConnection.getConnection();
@@ -72,7 +72,7 @@ public class MemberDao {
      * 회원 생성
      */
     public boolean save(MemberVo member) throws SQLException, ClassNotFoundException {
-        log.debug("MemberDao: save()");
+        log.info("MemberDao: save()");
         String sql = "insert into servlet_member.member values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now(), null)";
         @Cleanup Connection conn = dbConnection.getConnection();
         @Cleanup PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -98,7 +98,7 @@ public class MemberDao {
      * 로그인 처리
      */
     public boolean findMemberByIdAndPassword(String memberId, String password) throws SQLException, ClassNotFoundException {
-        log.debug("MemberDao: findMemberByIdAndPassword()");
+        log.info("MemberDao: findMemberByIdAndPassword()");
         String sql = "select * from servlet_member.member where id = ? and password = ?";
         @Cleanup Connection conn = dbConnection.getConnection();
         @Cleanup PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -117,7 +117,7 @@ public class MemberDao {
      * 회원 정보 조회
      */
     public MemberVo findMemberById(String memberId) throws SQLException, ClassNotFoundException {
-        log.debug("MemberDao: findMemberById()");
+        log.info("MemberDao: findMemberById()");
         log.info("id: {}", memberId);
         MemberVo member = null;
         String sql = "select * from servlet_member.member where id = ?";
@@ -153,7 +153,7 @@ public class MemberDao {
      * 회원 정보 업데이트
      */
     public boolean update(MemberVo member) throws SQLException, ClassNotFoundException {
-        log.debug("MemberDao: update()");
+        log.info("MemberDao: update()");
         String sql = "update servlet_member.member set password = ?, name = ?, gender = ?, birth = ?, email = ?, " +
                 "phone = ?, zipcode = ?, addr1 = ?, addr2 = ?, updated_at = now() where id = ?";
         @Cleanup Connection conn = dbConnection.getConnection();
@@ -177,7 +177,7 @@ public class MemberDao {
     }
 
     public boolean deleteByMemberId(String memberId) throws SQLException, ClassNotFoundException {
-        log.debug("MemberDao: deleteByMemberId()");
+        log.info("MemberDao: deleteByMemberId()");
         String sql = "delete from servlet_member.member where id = ?";
         @Cleanup Connection conn = dbConnection.getConnection();
         @Cleanup PreparedStatement pstmt = conn.prepareStatement(sql);

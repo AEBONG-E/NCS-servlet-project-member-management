@@ -40,10 +40,10 @@ public class DBConnection {
         conn = DriverManager.getConnection(URL, USER, PASSWORD);
 
         if (conn != null) {
-            log.debug("DB Connection Information");
-            log.debug("URL : " + URL);
-            log.debug("USER : " + USER);
-            log.debug("PASSWORD : " + PASSWORD);
+            log.info("DB Connection Information");
+            log.info("URL : " + URL);
+            log.info("USER : " + USER);
+            log.info("PASSWORD : " + PASSWORD);
         }
         return conn;
     }
