@@ -1,16 +1,13 @@
 package com.member.servletprojectmembermanagement.controller;
-import com.member.servletprojectmembermanagement.dao.MemberDao;
 import com.member.servletprojectmembermanagement.dto.MemberDto;
 import com.member.servletprojectmembermanagement.service.MemberServiceImpl;
 import lombok.extern.log4j.Log4j2;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
