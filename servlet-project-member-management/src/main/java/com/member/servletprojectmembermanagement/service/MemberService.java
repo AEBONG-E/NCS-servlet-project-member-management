@@ -10,14 +10,14 @@ import java.sql.SQLException;
 public interface MemberService {
 
     /**
-     * 회원 중복 검증 로직
+     * 회원 중복 검증 로직(ajax 활용)
      * @param request
      * @param response
      * @throws SQLException
      * @throws ClassNotFoundException
      * @throws IOException
      */
-    public void isExistId(HttpServletRequest request, HttpServletResponse response)
+    void isExistId(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ClassNotFoundException, IOException;
 
     /**
@@ -26,7 +26,7 @@ public interface MemberService {
      * @return
      * @throws Exception
      */
-    public boolean registerMember(HttpServletRequest request) throws Exception;
+    boolean registerMember(HttpServletRequest request) throws Exception;
 
     /**
      * 로그인 로직
@@ -35,13 +35,13 @@ public interface MemberService {
      * @throws SQLException
      * @throws ClassNotFoundException
      */
-    public boolean login(HttpServletRequest request) throws SQLException, ClassNotFoundException;
+    boolean login(HttpServletRequest request) throws SQLException, ClassNotFoundException;
 
     /**
      * 로그아웃 로직
      * @param request
      */
-    public void logout(HttpServletRequest request);
+    void logout(HttpServletRequest request);
 
     /**
      * 회원 정보 조회 로직
@@ -50,14 +50,14 @@ public interface MemberService {
      * @throws SQLException
      * @throws ClassNotFoundException
      */
-    public MemberDto getMemberById(HttpServletRequest request) throws SQLException, ClassNotFoundException;
+    MemberDto getMemberById(HttpServletRequest request) throws SQLException, ClassNotFoundException;
 
     /**
      * 회원 수정 로직
      * @param request
      * @return
      */
-    public boolean updateMember(HttpServletRequest request) throws SQLException, ClassNotFoundException;
+    boolean updateMember(HttpServletRequest request) throws SQLException, ClassNotFoundException;
 
     /**
      * 회원 삭제 로직
@@ -66,6 +66,6 @@ public interface MemberService {
      * @throws SQLException
      * @throws ClassNotFoundException
      */
-    public boolean deleteMember(HttpServletRequest request) throws SQLException, ClassNotFoundException;
+    boolean deleteMember(HttpServletRequest request) throws SQLException, ClassNotFoundException;
 
 }
