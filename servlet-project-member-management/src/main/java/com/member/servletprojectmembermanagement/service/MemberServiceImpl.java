@@ -17,12 +17,13 @@ import java.time.format.DateTimeFormatter;
 public class MemberServiceImpl implements MemberService {
 
     private static MemberServiceImpl instance;
-    private final MemberDao memberDao;
+    MemberDao memberDao = MemberDao.getInstance();
 
     //날짜 포맷 형식 전역 변수 선언
     DateTimeFormatter simpleFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
+    public MemberServiceImpl() {}
     private MemberServiceImpl(MemberDao dao) {
         this.memberDao = dao;
     }
@@ -34,20 +35,17 @@ public class MemberServiceImpl implements MemberService {
         return instance;
     }
 
-
     @Override
     public void isExistId(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException, IOException {
-        log.info("MemberService: isExistId()");
-        String id = request.getParameter("id");
-        response.getWriter().print("{\"result\":\"");
+        response.setContentType("application/json");
 
-        if (memberDao.isExistId(id)) {
-            response.getWriter().print("true");
-        }
-        else {
-            response.getWriter().print("false");
-        }
-        response.getWriter().print("\"}");
+        String id = request.getParameter("id");
+
+        String result = memberDao.isExistId(id) ? "true" : "false";
+        log.info("MemberService: isExistId({})", result);
+        String jsonResult = String.format("{\"result\":\"%s\"}", result);
+
+        response.getWriter().print(jsonResult);
     }
 
     @Override
@@ -75,7 +73,7 @@ public class MemberServiceImpl implements MemberService {
         memberDto.setAddr1(request.getParameter("addr1"));
         memberDto.setAddr2(request.getParameter("addr2"));
 
-        LocalDateTime createdAt = LocalDateTime.parse(request.getParameter("createdAt"), formatter);
+        LocalDateTime createdAt = LocalDateTime.now();
         memberDto.setCreatedAt(createdAt);
 
         if (!memberDao.isExistId(memberDto.getId())) {
@@ -147,8 +145,8 @@ public class MemberServiceImpl implements MemberService {
             dto.setAddr2(request.getParameter("addr2"));
 
             dto.setCreatedAt(LocalDateTime.parse(request.getParameter("createdAt"), simpleFormatter));
-            LocalDateTime updatedAt = LocalDateTime.parse(request.getParameter("updatedAt"), formatter);
-            dto.setUpdatedAt(updatedAt);
+            LocalDateTime updatedAt = LocalDateTime.now();
+            dto.setCreatedAt((updatedAt));
 
             MemberVo vo = MemberDto.toVo(dto);
             return memberDao.update(vo);
