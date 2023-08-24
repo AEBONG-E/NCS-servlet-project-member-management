@@ -9,9 +9,7 @@ import lombok.extern.log4j.Log4j2;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -37,20 +35,17 @@ public class MemberServiceImpl implements MemberService {
         return instance;
     }
 
-
     @Override
     public void isExistId(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException, IOException {
-        log.info("MemberService: isExistId()");
-        String id = request.getParameter("id");
-        response.getWriter().print("{\"result\":\"");
+        response.setContentType("application/json");
 
-        if (memberDao.isExistId(id)) {
-            response.getWriter().print("true");
-        }
-        else {
-            response.getWriter().print("false");
-        }
-        response.getWriter().print("\"}");
+        String id = request.getParameter("id");
+
+        String result = memberDao.isExistId(id) ? "true" : "false";
+        log.info("MemberService: isExistId({})", result);
+        String jsonResult = String.format("{\"result\":\"%s\"}", result);
+
+        response.getWriter().print(jsonResult);
     }
 
     @Override
