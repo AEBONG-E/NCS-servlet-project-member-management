@@ -24,7 +24,7 @@ public class BoardVo {
     private String ip;
     private Integer rippleCnt;  //게시판에 등록된 댓글의 갯수
     private String fileName;    //파일명
-    private Integer fileSize;    //파일크기
+    private Long fileSize;    //파일크기
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
