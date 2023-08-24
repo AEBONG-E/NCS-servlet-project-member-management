@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("DB 연결 테스트")
 @Log4j2
-class DBConnectionTest {
+class MemberDBTest {
 
     private DBConnection dbConnection;
 
