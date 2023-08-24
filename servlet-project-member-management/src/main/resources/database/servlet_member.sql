@@ -29,11 +29,11 @@ CREATE TABLE servlet_member.`board`
     `member_name`  VARCHAR(50)  NOT NULL,
     `title`        VARCHAR(255) NOT NULL,
     `content`      TEXT         NOT NULL,
-    `hit`          int,
+    `hit`          int          NULL     DEFAULT 0,
     `ip`           VARCHAR(20),
     `ripple_count` int          NULL     DEFAULT 0,
     `file_name`    VARCHAR(100),
-    `file_size`    bigint,
+    `file_size`    bigint       NULL     DEFAULT 0,
     `created_at`   DATETIME     NOT NULL DEFAULT now(),
     `updated_at`   DATETIME     NULL     DEFAULT NULL,
     PRIMARY KEY (`num`)
