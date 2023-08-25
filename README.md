@@ -1,8 +1,8 @@
 # 프로젝트 : servlet-project-member-management
-JSP / Servlet 를 활용하여 간단한 회원관리 및 게시판 프로젝트 구현
-MVC 패턴 과 Mock 를 활용한 TDD(테스트 주도 개발) 방식 개발
-도메인과 DTO 간 커스텀 매핑 전략 활용
-GitKraken 을 통한 Git Flow Feature Branch 전략으로 형상 관리
+ - JSP / Servlet 를 활용하여 간단한 회원관리 및 게시판 프로젝트 구현
+ - MVC 패턴 과 Mock 를 활용한 TDD(테스트 주도 개발) 방식 개발
+ - 도메인과 DTO 간 커스텀 매핑 전략 활용
+ - GitKraken 을 통한 Git Flow Feature Branch 전략으로 형상 관리
 
 ## 주요 기능
 
