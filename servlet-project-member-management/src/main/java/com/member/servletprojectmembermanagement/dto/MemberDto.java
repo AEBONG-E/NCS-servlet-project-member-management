@@ -27,6 +27,11 @@ public class MemberDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    public MemberDto(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public static MemberDto MemberMapper(MemberVo vo) {
         MemberDto dto = new MemberDto();
         dto.setId(vo.getId());
