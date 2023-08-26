@@ -109,7 +109,7 @@ public class MemberController extends HttpServlet {
                 }
                 req.getRequestDispatcher("/WEB-INF/template/member/member_update.jsp").forward(req, resp);
                 break;
-            case "/member/process_member_update": //회원 가입 처리
+            case "/member/process_member_update": //회원 수정 처리
                 log.info("MemberController: process_member_update...");
                 try {
                     if (memberService.updateMember(req)) {
