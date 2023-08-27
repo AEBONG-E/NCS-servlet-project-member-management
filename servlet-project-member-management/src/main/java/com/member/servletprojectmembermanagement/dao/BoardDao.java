@@ -50,7 +50,7 @@ public class BoardDao {
      * 게시글 생성
      */
     public boolean save(BoardVo board) throws SQLException, ClassNotFoundException {
-        String sql = "insert into servlet_member.board values (null, ?, ?, ?, ?, 0, ?, 0, ?, 0, now(), null )";
+        String sql = "insert into servlet_member.board values (null, ?, ?, ?, ?, 0, ?, 0, ?, ?, now(), null )";
         @Cleanup Connection conn = dbConnection.getConnection();
         @Cleanup PreparedStatement pstmt = conn.prepareStatement(sql);
 
@@ -60,6 +60,7 @@ public class BoardDao {
         pstmt.setString(4, board.getContent());
         pstmt.setString(5, board.getIp());
         pstmt.setString(6, board.getFileName());
+        pstmt.setLong(7, board.getFileSize());
         pstmt.executeUpdate();
         log.info("BoardDao: save() - {}", board);
 
@@ -160,7 +161,7 @@ public class BoardDao {
             );
             boardList.add(board);
         }
-        log.info("BoardDao: findList() boardList - {}", boardList);
+        log.debug("BoardDao: findList() boardList - {}", boardList);
         return boardList;
     }
 
