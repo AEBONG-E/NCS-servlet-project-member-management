@@ -21,7 +21,7 @@
                         </li>
                         <li class="nav-item"><a class="nav-link" href='<c:url value="/member/member_register"/>'>회원 가입</a>
                         </li>
-<%--                        <li class="nav-item"><a class="nav-link" href='<c:url value="/board/list.do"/>'>게시판</a></li>--%>
+                        <li class="nav-item"><a class="nav-link" href='<c:url value="/board/board_list"/>'>게시판</a></li>
                     </c:when>
                     <c:otherwise>
                         <li style="padding-top: 7px; color: white">[<%=sessionMemberName%>님]</li>
@@ -29,7 +29,7 @@
                         </li>
                         <li class="nav-item"><a class="nav-link" href="<c:url value="/member/member_update"/>">회원 수정</a>
                         </li>
-<%--                        <li class="nav-item"><a class="nav-link" href='<c:url value="/board/list.do"/>'>게시판</a></li>--%>
+                        <li class="nav-item"><a class="nav-link" href='<c:url value="/board/board_list"/>'>게시판</a></li>
                     </c:otherwise>
                 </c:choose>
             </ul>
