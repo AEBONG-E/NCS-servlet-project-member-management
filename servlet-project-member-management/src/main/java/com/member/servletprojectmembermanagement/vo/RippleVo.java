@@ -18,8 +18,8 @@ import java.util.Optional;
 @AllArgsConstructor
 public class RippleVo {
     private long rippleId;
-    private MemberVo member;
     private BoardVo board;
+    private MemberVo member;
     private String content;
     private String ip;
     private LocalDateTime createdAt;
@@ -27,6 +27,14 @@ public class RippleVo {
     //로그인 상태가 아닐 때는 '댓글 삭제' 버튼이 생기지 않도록 하기 위한 설정
     private boolean isLogin;
 
+    public RippleVo(long rippleId, BoardVo board, MemberVo member, String content, String ip, LocalDateTime createdAt) {
+        this.rippleId = rippleId;
+        this.board = board;
+        this.member = member;
+        this.content = content;
+        this.ip = ip;
+        this.createdAt = createdAt;
+    }
 
     public String getMemberId() {
         return member != null ? member.getId() : null;
