@@ -53,16 +53,13 @@ public class BoardServiceImpl implements BoardService {
 
         HttpSession session = request.getSession();
         memberDto.setId((String) session.getAttribute("sessionMemberId"));
-        memberDto.setName(request.getParameter("name"));
+        memberDto.setName((String) session.getAttribute("sessionMemberName"));
 
         MemberVo member = MemberDto.toVo(memberDto);
 
         uploadFileForm(request, boardDto, memberDto); //파일 저장
 
         boardDto.setMember(member);
-        boardDto.setTitle(request.getParameter("title"));
-        boardDto.setContent(request.getParameter("content"));
-        boardDto.setHit(Integer.valueOf(request.getParameter("hit"))); //조회수
         boardDto.setIp(request.getRemoteAddr()); //접근 IP
         boardDto.setRippleCnt(0);
         boardDto.setCreatedAt(LocalDateTime.now());
@@ -162,17 +159,15 @@ public class BoardServiceImpl implements BoardService {
 
         HttpSession session = request.getSession();
         memberDto.setId((String) session.getAttribute("sessionMemberId"));
-        memberDto.setName(request.getParameter("name"));
+        memberDto.setName((String) session.getAttribute("sessionMemberName"));
 
         MemberVo member = MemberDto.toVo(memberDto);
 
         uploadFileForm(request, boardDto, memberDto); // 파일 저장, 필요한 경우에만
 
-        boardDto.setNum(Long.parseLong(request.getParameter("num")));
         boardDto.setMember(member);
-        boardDto.setTitle(request.getParameter("title"));
-        boardDto.setContent(request.getParameter("content"));
-//        boardDto.setIp(request.getRemoteAddr()); // 접근 IP
+        boardDto.setIp(request.getRemoteAddr()); // 접근 IP
+
         boardDto.setUpdatedAt(LocalDateTime.now());
 
         BoardVo board = BoardDto.toVo(boardDto);
