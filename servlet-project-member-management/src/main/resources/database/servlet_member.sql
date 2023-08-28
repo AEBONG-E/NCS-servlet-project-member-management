@@ -48,7 +48,6 @@ CREATE TABLE servlet_member.`ripple`
     `content`     TEXT        NOT NULL,
     `ip`          VARCHAR(20),
     `created_at`  DATETIME    NOT NULL DEFAULT now(),
-    `updated_at`  DATETIME    NULL     DEFAULT NULL,
     PRIMARY KEY (`rippleId`)
 ) DEFAULT CHARSET = utf8;
 

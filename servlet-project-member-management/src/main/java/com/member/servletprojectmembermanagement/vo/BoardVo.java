@@ -36,6 +36,10 @@ public class BoardVo {
         return member != null ? member.getName() : null;
     }
 
+    public BoardVo(long num) {
+        this.num = num;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
