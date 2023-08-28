@@ -32,7 +32,7 @@ CREATE TABLE servlet_member.`board`
     `hit`          int          NULL     DEFAULT 0,
     `ip`           VARCHAR(20),
     `ripple_count` int          NULL     DEFAULT 0,
-    `file_name`    VARCHAR(100),
+    `file_name`    VARCHAR(100) NULL     DEFAULT NULL,
     `file_size`    bigint       NULL     DEFAULT 0,
     `created_at`   DATETIME     NOT NULL DEFAULT now(),
     `updated_at`   DATETIME     NULL     DEFAULT NULL,
