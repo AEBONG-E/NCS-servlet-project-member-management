@@ -75,7 +75,7 @@ public class BoardController extends HttpServlet {
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-                req.getRequestDispatcher(viewPath + "board_article.jsp");
+                req.getRequestDispatcher(viewPath + "board_article.jsp").forward(req,resp);
                 break;
             case "/board/board_update": //게시글 수정 폼페이지 노출
                 log.info("BoardController: board_update");
@@ -84,7 +84,7 @@ public class BoardController extends HttpServlet {
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-                req.getRequestDispatcher(viewPath + "board_update.jsp");
+                req.getRequestDispatcher(viewPath + "board_update.jsp").forward(req,resp);
                 break;
             case "/board/process_board_update": //게시글 수정 처리
                 log.info("BoardController: process_board_update...");
