@@ -251,12 +251,35 @@ public class BoardDao {
         }
     }
 
+    /*
+     * 게시글 삭제
+     */
     public boolean deleteByNum(long num) throws SQLException, ClassNotFoundException {
         log.info("BoardDao: deleteByNum()");
         String sql = "delete from servlet_member.board where num = ?;";
         @Cleanup Connection conn = dbConnection.getConnection();
         @Cleanup PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setLong(1, num);
+        pstmt.executeUpdate();
+
+        if (pstmt != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /*
+     * 게시글 번호를 기준으로 댓글 갯수 업데이트
+     */
+    public boolean updateRippleCountByNum(long num, int rippleCnt) throws SQLException, ClassNotFoundException {
+        log.info("BoardDao: updateRippleCountByNum()");
+
+        String sql = "update servlet_member.board set ripple_count = ? where num = ?";
+        @Cleanup Connection conn = dbConnection.getConnection();
+        @Cleanup PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1, rippleCnt);
+        pstmt.setLong(2, num);
         pstmt.executeUpdate();
 
         if (pstmt != null) {
