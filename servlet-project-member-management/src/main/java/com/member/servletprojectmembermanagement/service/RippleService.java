@@ -16,7 +16,7 @@ public interface RippleService {
      * @throws SQLException
      * @throws ClassNotFoundException
      */
-    boolean registerRipple(HttpServletRequest request) throws SQLException, ClassNotFoundException;
+    boolean registerRipple(HttpServletRequest request) throws Exception;
 
     /**
      * 게시글 기준으로 댓글 목록 가져오는 로직
