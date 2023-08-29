@@ -45,8 +45,7 @@ public class RippleServiceImpl implements RippleService {
      * 댓글 생성 시 게시글 의 댓글 갯수 카운트 반영 메소드 동작
      */
     @Override
-    public boolean registerRipple(HttpServletRequest request) throws SQLException, ClassNotFoundException {
-        log.info("RippleService : registerRipple()");
+    public boolean registerRipple(HttpServletRequest request) throws Exception {
         BoardDao boardDao = BoardDao.getInstance();
 
         RippleDto rippleDto = new RippleDto();
@@ -68,14 +67,18 @@ public class RippleServiceImpl implements RippleService {
         rippleDto.setIp(request.getRemoteAddr());
         rippleDto.setCreatedAt(LocalDateTime.now());
 
+
         RippleVo ripple = RippleDto.toVo(rippleDto);
-        if (rippleDao.save(ripple)) {
-            boardDao.updateRippleCountByNum(ripple.getBoard().getNum(), rippleDao.findRippleCountByBoardNum(ripple.getBoard().getNum()));
+        boolean rippleSaved = rippleDao.save(ripple);
+        log.info("RippleService Ripple saved: " + rippleSaved);
+
+        if (rippleSaved) {
+            boolean updatedCount = boardDao.updateRippleCountByNum(ripple.getBoard().getNum(), rippleDao.findRippleCountByBoardNum(ripple.getBoard().getNum()));
+            log.info("RippleService Updated ripple count: " + updatedCount);
             return true;
         } else {
             return false;
         }
-
     }
 
     /*
