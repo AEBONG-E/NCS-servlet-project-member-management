@@ -10,7 +10,7 @@
 
     <loggers>
 
-        <root level="INFO" additivity="false">
+        <root level="ERROR" additivity="false">
             <AppenderRef ref="console"/>
         </root>
 
