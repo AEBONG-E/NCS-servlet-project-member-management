@@ -56,7 +56,6 @@
                         <td>${no}</td>
                         <td><a href="board_article?num=${board.num}&pageNum=${pageNum}">${board.title}</a>
                             <c:if test="${board.rippleCnt > 0}">(${board.rippleCnt})</c:if>
-                            <c:if test="${!empty board.fileName}">(${board.fileName})</c:if>
                         </td>
                         <td>${board.createdAt}</td>
                         <td>${board.updatedAt}</td>
