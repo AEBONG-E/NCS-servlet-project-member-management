@@ -42,7 +42,7 @@ public class RippleDao {
         String insertSQL = "insert into servlet_member.ripple values (null, ?, ?, ?, ?, ?, now())";
         @Cleanup Connection conn = dbConnection.getConnection();
         @Cleanup PreparedStatement pstmt = conn.prepareStatement(insertSQL);
-        pstmt.setLong(1, ripple.getRippleId());
+        pstmt.setLong(1, ripple.getBoard().getNum());
         pstmt.setString(2, ripple.getMember().getId());
         pstmt.setString(3, ripple.getMember().getName());
         pstmt.setString(4, ripple.getContent());
