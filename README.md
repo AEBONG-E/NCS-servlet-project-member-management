@@ -1,16 +1,17 @@
 # 프로젝트 : servlet-project-member-management
  - JSP / Servlet 를 활용하여 간단한 회원관리 및 게시판 프로젝트 구현
- - MVC 패턴 과 Mock 를 활용한 TDD(테스트 주도 개발) 방식 개발
+ - MVC 패턴과 싱글톤 패턴으로 각 생성자 활용
+ - Mock 를 활용한 TDD(테스트 주도 개발) 방식 개발
  - 도메인과 DTO 간 커스텀 매핑 전략 활용
  - GitKraken 을 통한 Git Flow Feature Branch 전략으로 형상 관리
 
 ## 주요 기능
 
-* javascript 를 활용하여 회원가입 시 팝업 또는 ajax 통신으로 중복 체크
+* ajax 를 활용한 회원 중복 체크 및 댓글 생성/조회/삭제 기능 구현
 * 도로명주소 API 적용
 * session 활용 로그인 인증
 * apache commons 활용 파일 업로드
-* 그 외 회원 조회/생성/수정/삭제, 게시판 조회/생성/수정/삭제 기본 CRUD 기능
+* 그 외 회원 조회/생성/수정/삭제, 게시판 조회/생성/수정/삭제 기본 CRUD 기능 구현
 
 ## 개발 환경
 
